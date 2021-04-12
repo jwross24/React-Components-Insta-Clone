@@ -50,7 +50,7 @@ Your project should end up looking like
 
 ### Task 3: Stretch Goals
 
-- [ ] Create more dummy data in the dummy-data.js file and add search
+- [x] Create more dummy data in the dummy-data.js file and add search
       functionality to the search bar. One way to do this is with a filter
       method.
 - [ ] Implement the ability to add comments to a post using an input.
@@ -59,5 +59,5 @@ Your project should end up looking like
 
 ## Submission Format
 
-- [ ] Submit a Pull-Request to merge `<firstName-lastName>` Branch into `main`
+- [x] Submit a Pull-Request to merge `<firstName-lastName>` Branch into `main`
       (student's Repo). **Please don't merge your own pull request**
