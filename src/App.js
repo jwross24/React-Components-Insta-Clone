@@ -5,7 +5,7 @@
 */
 
 // Import the state hook
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 // Import the Posts (plural!) and SearchBar components, since they are used inside App component
 // Import the dummyData
 import './App.css';
@@ -17,28 +17,31 @@ const App = () => {
   // Create a state called `posts` to hold the array of post objects, **initializing to dummyData**.
   // This state is the source of truth for the data inside the app. You won't be needing dummyData anymore.
   const [posts, setPosts] = useState(dummyData);
-  const allPosts = dummyData;
   // To make the search bar work (which is stretch) we'd need another state to hold the search term.
   const [searchTerm, setSearchTerm] = useState('');
 
   const filterComments = (comments, term) => {
-    return comments.filter((comment) => comment.text.includes(term)).length > 0;
+    return (
+      comments.filter((comment) => comment.text.toLowerCase().includes(term))
+        .length > 0
+    );
   };
 
-  const filterPostByTerm = (post, term) => {
-    console.log(post, term);
+  const filterPostByTerm = useCallback((post, term) => {
     return post.username.includes(term) || filterComments(post.comments, term);
-  };
+  }, []);
 
   const handleItemInput = (event) => {
-    const { value } = event.target;
-    setSearchTerm(value);
-    const newPosts = allPosts.filter((post) =>
+    const query = event.target.value;
+    setSearchTerm(query);
+  };
+
+  useEffect(() => {
+    const newPosts = dummyData.filter((post) =>
       filterPostByTerm(post, searchTerm),
     );
-    console.log(newPosts);
     setPosts(newPosts);
-  };
+  }, [filterPostByTerm, searchTerm]);
 
   const likePost = (postId) => {
     /*
